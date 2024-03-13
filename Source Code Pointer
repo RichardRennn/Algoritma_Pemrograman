@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LENGTH 2024  // Declare MAX_LENGTH 2024
+#define MIN_LENGTH 1945  // Declare MIN_LENGTH 1945
+
+void lessThanRequired(int *lengthOfText) {  //fungsi untuk kasus panjang teks kurang dari MIN_LENGTH
+  printf("The length of your text is less than specified, please update your text.\n");  // Output Tulisan
+  *lengthOfText = MIN_LENGTH;  // Mengupdate panjang teks ke nilai MIN_LENGTH
+}
+
+void equalThanRequired() {  //fungsi untuk kasus panjang teks sama dengan MIN_LENGTH
+  printf("Thank you, Your text length is correct.\n");  // Output Tulisan
+
+void moreThanRequired(int *lengthOfText) {  //fungsi untuk kasus panjang teks lebih dari MIN_LENGTH
+  printf("Your text is too long, please reduce the text.\n");  // Output Tulisan
+  *lengthOfText = MIN_LENGTH;  // Mengupdate panjang teks ke nilai MIN_LENGTH
+}
+
+int checkLengthRequirement(char* text) {  //fungsi untuk memeriksa panjang teks
+  int length = strlen(text);  // Menghitung panjang teks
+    if (length < MIN_LENGTH)  // Jika panjang teks kurang dari MIN_LENGTH
+        return 0;  // Mengembalikan 0 untuk menunjukkan panjang teks kurang dari minimum
+    else if (length == MIN_LENGTH) // Jika panjang teks sama dengan MIN_LENGTH
+        return 1;  // Mengembalikan 1 untuk menunjukkan panjang teks sama dengan minimum
+    else  // Jika panjang teks lebih dari MIN_LENGTH
+        return 2;  // Mengembalikan 2 untuk menunjukkan panjang teks lebih dari minimum
+}
+
+int main() {
+  int length, lengthOfText, selectOption;  // Deklarasi variabel
+  FILE *fptr = NULL;  // Deklarasi pointer ke file
+
+  // Membuka file
+  fptr = fopen("C:\\Users\\lenovo\\OneDrive\\Desktop\\Praktikum Semester 2\\prak2\\file.txt", "r");
+  
+  // Memeriksa apakah file berhasil dibuka
+  if(fptr == NULL){
+    printf("Error");  // Jika file gagal dibuka, output error
+    exit(1);  // Menghentikan program
+  }
+
+  fgets(text, MAX_LENGTH, fptr);  // Membaca teks dari file dan menyimpannya dalam variabel 'text'
+
+  fclose(fptr);  // Menutup file setelah selesai dibaca
+
+  selectOption = checkLengthRequirement(text);  // Memeriksa panjang teks dan mendapatkan pilihan yang sesuai
+
+  void (*funcPtr[3])(int*) = {lessThanRequired, equalThanRequired, moreThanRequired};  // Mendefinisikan array dari pointer ke fungsi-fungsi yang sesuai
+  funcPtr[selectOption](&lengthOfText);  // Memanggil fungsi yang sesuai berdasarkan pilihan
+
+  printf("\nThe length is updated to %d\n", lengthOfText);  // Mencetak pesan bahwa panjang teks sudah diperbarui
+    // TODO
+    // Pada fungsi checkLenghtRequirement akan mengembalikan sebuah angka
+    // angka tersebut digunakan untuk memilih secara otomatis salah satu fungsi yang harus diisi
+    // jika fungsi checkLenghtRequirement() mengembalikan nilai 0, maka
+    //      tampilkan - > The length of your text is less than specified, please update your text
+    //      update nilai lengthOfText ke minimum requirement melalui pointer menggunakan operasi aritmatika
+
+    // jika fungsi checkLenghtRequirement() mengembalikan nilai 1, maka
+    //      tampilkan - > Thank you, Your text length is correct
+
+    // jika fungsi checkLenghtRequirement() mengembalikan nilai 2, maka
+    //      tampilkan - > Your text is to long, please reduce the text
+    //      update nilai lengthOfText ke minimum requirement melalui pointer menggunakan operasi aritmatika
+    //
+    // Catatan :
+    //      - tidak diperkenankan menggunakan if atau switch dalam perpindahan fungsi
+    //        sesuai dengan requirement diatas.
+    //      - baris kode tidak lebih dari 100 (include comment ini)
+    //      - tidak diperkenankan mengganti yang tertera pada starter code dalam alasan apapun
+  return 0;
+}
